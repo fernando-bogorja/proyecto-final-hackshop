@@ -3,18 +3,20 @@ const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema({
-  name: { type: String, max: 100 },
-  lastName: { type: String, max: 100 },
-  email: { type: String, max: 50 },
-  password: { type: String, max: 50 },
+  name: { type: String, max: 100, required: true },
+  lastName: { type: String, max: 100, required: true },
+  email: { type: String, max: 50, required: true },
+  password: { type: String, max: 50, required: true },
   address: { type: String, max: 100 },
   phone: { type: String, max: 50 },
   orderList: { type: Schema.Types.ObjectId, ref: "Order" },
 });
-userSchema.pre("save", async (next) => {
+
+//Hook to hash the password with bcrypt.
+userSchema.pre("save", async function (next) {
   const hashedPassword = await bcrypt.hash(this.password, 10);
   this.password = hashedPassword;
-  next();
+  return next();
 });
 
 //Export the schema as a models

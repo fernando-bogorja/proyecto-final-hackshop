@@ -11,12 +11,8 @@ const User = require("./models/User");
 //Create the database connection
 mongoose.connect(`mongodb://localhost/${db}`);
 mongoose.connection
-  .once("open", () => {
-    console.log("\n[MongoDB] Database connection successfull");
-  })
-  .on("error", (error) => {
-    console.log(error);
-  });
+  .once("open", () => console.log("\n[MongoDB] Database connection successfull"))
+  .on("error", (error) => console.log(error));
 
 module.exports = {
   Address,
