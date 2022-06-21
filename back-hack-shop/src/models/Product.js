@@ -12,5 +12,6 @@ const productSchema = new Schema({
   slug: { String, max: 200 },
 });
 
+//Export the schema as a model
 const Product = mongoose.model("Product", productSchema);
 module.exports = Product;

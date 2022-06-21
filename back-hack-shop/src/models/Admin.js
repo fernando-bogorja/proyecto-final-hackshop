@@ -8,5 +8,6 @@ const adminSchema = new Schema({
   created: { String, max: 140 },
 });
 
+//Export the schema as a model
 const Admin = mongoose.model("Admin", adminSchema);
 module.exports = Admin;

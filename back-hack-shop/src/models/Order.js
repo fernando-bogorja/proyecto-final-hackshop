@@ -9,5 +9,6 @@ const orderSchema = new Schema({
   boughtBy: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
+//Export the schema as a model
 const Order = mongoose.model("Order", orderSchema);
 module.exports = Order;

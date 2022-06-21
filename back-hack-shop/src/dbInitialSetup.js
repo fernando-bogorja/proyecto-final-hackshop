@@ -8,11 +8,11 @@ const PaymentMethod = require("./models/PaymentMethod");
 const Product = require("./models/Product");
 const User = require("./models/User");
 
+//Create the database connection
 moongose.connect(`mongodb://localhost/${db}`);
-
 moongose.connection
   .once("open", () => {
-    console.log("Database connection successfull");
+    console.log("\n[MongoDB] Database connection successfull");
   })
   .on("error", (error) => {
     console.log(error);

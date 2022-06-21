@@ -17,5 +17,6 @@ userSchema.pre("save", async (next) => {
   next();
 });
 
+//Export the schema as a models
 const User = mongoose.model("User", userSchema);
 module.exports = User;
