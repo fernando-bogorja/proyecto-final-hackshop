@@ -1,15 +1,15 @@
-const mongoose = require("moongose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const productSchema = new Schema({
-  name: { String, max: 100 },
-  price: { String, max: 100 },
+  name: { type: String, max: 100 },
+  price: { type: String, max: 100 },
   image: [],
-  description: { String, max: 50 },
-  featured: { Boolean },
-  stock: { String, max: 50 },
-  createdAt: { String, max: 50 },
-  slug: { String, max: 200 },
+  description: { type: String, max: 50 },
+  featured: { type: Boolean },
+  stock: { type: String, max: 50 },
+  createdAt: { type: String, max: 50 },
+  slug: { type: String, max: 200 },
 });
 
 //Export the schema as a model

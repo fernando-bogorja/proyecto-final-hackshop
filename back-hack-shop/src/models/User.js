@@ -1,14 +1,14 @@
-const mongoose = require("moongose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema({
-  name: { String, max: 100 },
-  lastName: { String, max: 100 },
-  email: { String, max: 50 },
-  password: { String, max: 50 },
-  address: { String, max: 100 },
-  phone: { String, max: 50 },
+  name: { type: String, max: 100 },
+  lastName: { type: String, max: 100 },
+  email: { type: String, max: 50 },
+  password: { type: String, max: 50 },
+  address: { type: String, max: 100 },
+  phone: { type: String, max: 50 },
   orderList: { type: Schema.Types.ObjectId, ref: "Order" },
 });
 userSchema.pre("save", async (next) => {

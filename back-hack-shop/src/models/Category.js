@@ -1,8 +1,8 @@
-const mongoose = require("moongose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const categorySchema = new Schema({
-  name: { String, max: 50 },
+  name: { type: String, max: 50 },
 });
 
 //Export the schema as a model

@@ -1,11 +1,11 @@
-const mongoose = require("moongose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-  status: { String, max: 100 },
-  createdAt: { String, max: 100 },
+  status: { type: String, max: 100 },
+  createdAt: { type: String, max: 100 },
   shopList: [{ type: Schema.Types.ObjectId, ref: "Product" }],
-  total: { String, max: 100 },
+  total: { type: String, max: 100 },
   boughtBy: { type: Schema.Types.ObjectId, ref: "User" },
 });
 

@@ -6,6 +6,7 @@ const APP_PORT = process.env.APP_PORT;
 app.use(express.json());
 app.use(cors());
 const routes = require("./routes");
+const { User } = require("./dbInitialSetup");
 routes(app);
 
 

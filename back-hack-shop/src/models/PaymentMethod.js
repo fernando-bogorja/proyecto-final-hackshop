@@ -1,8 +1,8 @@
-const mongoose = require("moongose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const paymentSchema = new Schema({
-  name: { String, max: 100 },
+  name: { type: String, max: 100 },
 });
 
 //Export the schema as a model

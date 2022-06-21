@@ -1,11 +1,11 @@
-const mongoose = require("moongose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const adminSchema = new Schema({
-  firstName: { String, max: 140 },
-  password: { String, max: 140 },
-  email: { String, max: 140 },
-  created: { String, max: 140 },
+  firstName: { type: String, max: 140 },
+  password: { type: String, max: 140 },
+  email: { type: String, max: 140 },
+  created: { type: String, max: 140 },
 });
 
 //Export the schema as a model

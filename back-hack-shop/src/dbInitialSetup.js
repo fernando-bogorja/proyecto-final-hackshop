@@ -1,4 +1,4 @@
-const moongose = require("moongose");
+const mongoose = require("mongoose");
 const db = process.env.DB_DATABASE;
 const Address = require("./models/Address");
 const Admin = require("./models/Admin");
@@ -9,8 +9,8 @@ const Product = require("./models/Product");
 const User = require("./models/User");
 
 //Create the database connection
-moongose.connect(`mongodb://localhost/${db}`);
-moongose.connection
+mongoose.connect(`mongodb://localhost/${db}`);
+mongoose.connection
   .once("open", () => {
     console.log("\n[MongoDB] Database connection successfull");
   })
