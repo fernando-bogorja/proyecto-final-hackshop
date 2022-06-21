@@ -1,6 +1,6 @@
 const express = require("express");
 const publicRoutes = express.Router();
-const { createUser, loginUser, getUsers } = require('../controllers/userController');
+const { createUser, loginUser, getAllUsers } = require('../controllers/userController');
 /* /api/ */
 
 publicRoutes.get("/", (req, res) => {
@@ -10,6 +10,6 @@ publicRoutes.get("/", (req, res) => {
 publicRoutes.post("/user/register", createUser);
 publicRoutes.post("/user/login", loginUser);
 
-publicRoutes.get('/user', getUsers);
+publicRoutes.get('/user', getAllUsers);
 
 module.exports = publicRoutes;

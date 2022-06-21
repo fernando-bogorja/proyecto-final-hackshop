@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const productSchema = new Schema({
   name: { type: String, max: 100 },
   price: { type: String, max: 100 },
-  image: [],
-  description: { type: String, max: 50 },
+  images: [],
+  description: { type: String, max: 200 },
   featured: { type: Boolean },
   stock: { type: String, max: 50 },
-  createdAt: { type: String, max: 50 },
+  createdAt: Date,
   slug: { type: String, max: 200 },
 });
 

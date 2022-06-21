@@ -5,7 +5,7 @@ const adminSchema = new Schema({
   firstName: { type: String, max: 140 },
   password: { type: String, max: 140 },
   email: { type: String, max: 140 },
-  created: { type: String, max: 140 },
+  createdAt: { type: Date },
 });
 
 //Export the schema as a model

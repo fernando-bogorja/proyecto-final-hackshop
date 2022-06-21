@@ -3,26 +3,37 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 
-async function getUsers(req, res) {
+async function getAllUsers(req, res) {
   try {
     const users = await User.find();
     return res.json(users);
   } catch (error) {
     return res.json({ message: 'Error getting users', error });
   }
-}
-
+};
 
 /* Begin Authentication */
 
-//Register an user in the database
+/**
+ * Registra un usuario.
+ * @param  req Request object
+ * @param  res Response object
+ * @ [Request Body]
+ * @ name: String(100),
+ * @ lastName: String(100),
+ * @ email: String(50),
+ * @ password: String(100)
+ * @ address: String(100),
+ * @ phone: String(50),
+ * @return req.json() with the info and the new user data
+**/
 async function createUser(req, res) {
   const { name, lastName, email, password, address, phone } = req.body;
   try {
     const findUser = await User.findOne({ email })
 
     //Si encontramos un usuario con el mismo email, retornamos un mensaje de error.
-    if (findUser) return res.json({ message: 'An user with the same email already exists' })
+    if (findUser) return res.json({ message: 'An user with the same email already exists', data: {} })
 
     //Si no encontramos un usuario con el mismo email, creamos el usuario.
     const user = new User({
@@ -33,16 +44,24 @@ async function createUser(req, res) {
       address,
       phone
     });
-    //HASH
     await user.save();
-    return res.json({ message: 'User created successfully' });
+
+    return res.json({ message: 'User created successfully', data: user });
 
   } catch (error) {
     return res.json({ message: 'Error creating user', error });
   }
-}
+};
 
-//Login an user in the database
+/**
+ * Autentica un usuario.
+ * @param  req Request object
+ * @param  res Response object
+ * @ [Request Body]
+ * @ email: String(50),
+ * @ password: String(100)
+ * @return req.json() with the user data and a token
+**/
 async function loginUser(req, res) {
   const { email, password } = req.body;
   try {
@@ -64,13 +83,20 @@ async function loginUser(req, res) {
         }
       });
     })
-
   } catch (error) {
     return res.json({ message: 'Error logging in', error });
   }
-}
+};
+
+async function deleteUser(req, res) {
+
+};
+
+async function updateUser(req, res) {
+
+};
 
 /* End Authentication */
 
 
-module.exports = { createUser, loginUser, getUsers };
+module.exports = { createUser, loginUser, getAllUsers };
