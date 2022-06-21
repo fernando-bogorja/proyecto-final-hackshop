@@ -1,0 +1,34 @@
+{
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#cf7184",
+    "activityBar.activeBorder": "#51068f",
+    "activityBar.background": "#ff7b96",
+    "activityBar.foreground": "#e7e7e7",
+    "activityBar.inactiveForeground": "#a1016499",
+    "activityBarBadge.background": "#7c5da5",
+    "activityBarBadge.foreground": "#e7e7e7",
+    "sash.hoverBorder": "#ff7b96",
+    "statusBar.background": "#ff7b96",
+    "statusBar.foreground": "#e7e7e7",
+    "statusBarItem.hoverBackground": "#fa7f97",
+    "statusBarItem.remoteBackground": "#f08a9e",
+    "statusBarItem.remoteForeground": "#49022e99",
+    "titleBar.activeBackground": "#ff7b96",
+    "titleBar.activeForeground": "#3d0a36e7",
+    "titleBar.inactiveBackground":  "#ff7b96",
+    "titleBar.inactiveForeground": "#e7e7e799"
+  }
+  "peacock.color": "#ff7b96"
+}
+
+{
+  /* <Box
+  sx={{
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    bgcolor: "background.default",
+    color: "text.primary",
+  }}
+></Box>; */
+}
