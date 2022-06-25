@@ -23,26 +23,60 @@ async function getAllProducts(req, res) {
  * @return req.json() with the product data
  */
 async function getProductByQuery(req, res) {
-  const { action } = req.params;
   const query = req.query;
+  const { action } = req.params;
+  console.log(query);
 
-  const regex = new RegExp(query.search, "i");
-  if (action === "get") {
-    try {
-      const product = await Product.findOne({ _id: query });
-      if (!product) return res.json({ message: "Product not found", data: {} });
-      return res.json({
-        message: "Product found",
-        data: product,
-      });
-    } catch (error) {
-      return res.json({
-        message: "Error getting the product",
-        error: error.message,
-      });
-    }
-  } else {
-    return res.json({ message: "Action not found", data: {} });
+  switch (Object.keys(query)[0]) {
+    case "id":
+      return getProductById(req, res);
+    case "category":
+      return getProductsByCategory(req, res);
+    default:
+      return getAllProducts(req, res);
+  }
+
+}
+
+async function getProductsByCategory(req, res) {
+  const { category } = req.query;
+  try {
+    const products = await Product.find({ category });
+    if (!products) return res.json({ message: "Product not found", data: {} });
+    return res.json({ message: "Product found", data: products });
+  } catch (error) {
+    return res.json({
+      message: "Error finding the product",
+      error: error.message,
+    });
+  }
+}
+
+async function getProductById(req, res) {
+  const { id } = req.query;
+  try {
+    const product = await Product.findById(id);
+    if (!product) return res.json({ message: "Product not found", data: {} });
+    return res.json({ message: "Product found", data: product });
+  } catch (error) {
+    return res.json({
+      message: "Error finding the product",
+      error: error.message,
+    });
+  }
+}
+
+async function getProductByMadeIn(req, res) {
+  const { made } = req.query;
+  try {
+    const products = await Product.find({ made });
+    if (!products) return res.json({ message: "Product not found", data: {} });
+    return res.json({ message: "Product found", data: products });
+  } catch (error) {
+    return res.json({
+      message: "Error finding the product",
+      error: error.message,
+    });
   }
 }
 
@@ -133,7 +167,7 @@ async function updateOne(req, res) {
     if (!product) return res.json({ message: "Product not found", data: {} });
 
     return res.json({ message: "Product updated successfully", data: product });
-  } catch (error) {}
+  } catch (error) { }
 }
 
 async function createOne(req, res) {
@@ -187,7 +221,7 @@ async function importProducts(req, res) {
  * @return req.json() with the related data
  *
  **/
-async function buy(req, res) {}
+async function buy(req, res) { }
 
 module.exports = {
   getAllProducts,
