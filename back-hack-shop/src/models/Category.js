@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const categorySchema = new Schema({
   name: { type: String, max: 50 },
+  description: { type: String, max: 300 },
 });
 
 //Export the schema as a model

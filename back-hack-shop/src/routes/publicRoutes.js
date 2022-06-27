@@ -2,11 +2,38 @@ const express = require("express");
 const publicRoutes = express.Router();
 const { createUser, loginUser, getAllUsers } = require('../controllers/userController');
 const { createOne, importProducts, getAllProducts, getProductByQuery, deleteAll, deleteOne } = require('../controllers/productController');
-var { expressjwt: verify } = require("express-jwt");
+const { getPaymentMethodByQuery, createPaymentMethod, getAllPaymentMethods } = require('../controllers/paymentController');
+const { getAllCategories, createCategory } = require('../controllers/categoryController');
 /* /api/ */
 
 publicRoutes.get("/", (req, res) => {
-  res.json("Hello World!!");
+  res.json({
+    message: "You are in the public API of RAIZEN",
+    queries: {
+      users: [
+        "POST /api/user/register",
+        "POST /api/user/login",
+        "GET /api/user",
+      ],
+      products: [
+        "POST /api/products/create",
+        "POST /api/products/import",
+        "GET /api/products",
+        "GET /api/products/:get?param=value",
+        "DELETE /api/products/delete",
+        "DELETE /api/products/clear",
+      ],
+      paymentMethods: [
+        "GET /api/payment",
+        "POST /api/payment/create",
+        "GET /api/payment/:get?param=value",
+      ],
+      categories: [
+        "GET /api/category",
+        "POST /api/category/create",
+      ],
+    }
+  });
 });
 
 /* Begin User Routes */
@@ -25,6 +52,17 @@ publicRoutes.post("/products/import", importProducts);
 publicRoutes.delete("/products/clear", deleteAll);
 publicRoutes.delete("/products/delete", deleteOne);
 /* End Product Routes */
+
+/* Begin Payment Method Routes */
+publicRoutes.get('/payment', getAllPaymentMethods);
+publicRoutes.post('/payment/create', createPaymentMethod);
+publicRoutes.get('/payment/:action', getPaymentMethodByQuery);
+/* End Payment Method Routes */
+
+/* Begin Category Routes */
+publicRoutes.get('/category', getAllCategories);
+publicRoutes.post('/category/create', createCategory);
+/* End Category Routes */
 
 
 module.exports = publicRoutes;

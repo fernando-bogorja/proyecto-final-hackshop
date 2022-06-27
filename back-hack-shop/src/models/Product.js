@@ -6,7 +6,7 @@ const productSchema = new Schema({
   price: { type: String, max: 100 },
   images: [],
   description: { type: String },
-  category: { type: String, max: 100 },
+  category: { type: Schema.Types.ObjectId, ref: "Category" },
   upholstery: { type: String, max: 100 },
   size: { type: String, max: 100 },
   made_in: { type: String, max: 100 },

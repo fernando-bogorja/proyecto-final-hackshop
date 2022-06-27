@@ -8,7 +8,7 @@ const { Product } = require("../dbInitialSetup");
  */
 async function getAllProducts(req, res) {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate("category");
     return res.json(products);
   } catch (error) {
     return res.json({ error: error.message });
@@ -25,7 +25,6 @@ async function getAllProducts(req, res) {
 async function getProductByQuery(req, res) {
   const query = req.query;
   const { action } = req.params;
-  console.log(query);
 
   switch (Object.keys(query)[0]) {
     case "id":
@@ -41,7 +40,7 @@ async function getProductByQuery(req, res) {
 async function getProductsByCategory(req, res) {
   const { category } = req.query;
   try {
-    const products = await Product.find({ category });
+    const products = await Product.find({ where: { category } });
     if (!products) return res.json({ message: "Product not found", data: {} });
     return res.json({ message: "Product found", data: products });
   } catch (error) {
@@ -226,6 +225,7 @@ async function buy(req, res) { }
 module.exports = {
   getAllProducts,
   getProductByQuery,
+  getProductsByCategory,
   deleteOne,
   deleteMany,
   deleteAll,
