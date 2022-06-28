@@ -4,6 +4,7 @@ const { createUser, loginUser, getAllUsers } = require('../controllers/userContr
 const { createOne, importProducts, getAllProducts, getProductByQuery, deleteAll, deleteOne } = require('../controllers/productController');
 const { getPaymentMethodByQuery, createPaymentMethod, getAllPaymentMethods } = require('../controllers/paymentController');
 const { getAllCategories, createCategory } = require('../controllers/categoryController');
+const { createAddress, getAddress, getAllAddresses } = require('../controllers/addressController');
 /* /api/ */
 
 publicRoutes.get("/", (req, res) => {
@@ -63,6 +64,12 @@ publicRoutes.get('/payment/:action', getPaymentMethodByQuery);
 publicRoutes.get('/category', getAllCategories);
 publicRoutes.post('/category/create', createCategory);
 /* End Category Routes */
+
+/* Begin Address Routes */
+publicRoutes.get('/address', getAllAddresses);
+publicRoutes.post('/address/create', createAddress);
+publicRoutes.get('/address/:id', getAddress);
+/* End Address Routes */
 
 
 module.exports = publicRoutes;
