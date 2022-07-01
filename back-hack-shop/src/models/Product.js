@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const slugify = require("slugify");
 
 const productSchema = new Schema({
   name: { type: String, max: 100 },
@@ -17,6 +18,18 @@ const productSchema = new Schema({
   stock: { type: String, max: 50 },
   createdAt: Date,
   slug: { type: String, max: 200 },
+});
+//Product Slug
+productSchema.pre("save", function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+productSchema.pre("insertMany", function (next, products) {
+  products.map(function (product) {
+    product.slug = slugify(product.name, { lower: true });
+  });
+  next();
 });
 
 //Export the schema as a model

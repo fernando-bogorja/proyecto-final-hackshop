@@ -31,10 +31,25 @@ async function getProductByQuery(req, res) {
       return getProductById(req, res);
     case "category":
       return getProductsByCategory(req, res);
+    case "slug":
+      return getProductBySlug(req, res);
     default:
       return getAllProducts(req, res);
   }
+}
 
+async function getProductBySlug(req, res) {
+  const { slug } = req.query;
+  try {
+    const products = await Product.findOne({ slug });
+    if (!products) return res.json({ message: "Product not found", data: {} });
+    return res.json({ message: "Product found", data: products });
+  } catch (error) {
+    return res.json({
+      message: "Error finding the product",
+      error: error.message,
+    });
+  }
 }
 
 async function getProductsByCategory(req, res) {
@@ -166,11 +181,24 @@ async function updateOne(req, res) {
     if (!product) return res.json({ message: "Product not found", data: {} });
 
     return res.json({ message: "Product updated successfully", data: product });
-  } catch (error) { }
+  } catch (error) {}
 }
 
 async function createOne(req, res) {
-  const { name, price, images, description, featured, stock, slug } = req.body;
+  const {
+    name,
+    price,
+    images,
+    description,
+    featured,
+    stock,
+    size,
+    made_in,
+    length,
+    tall,
+    category,
+    upholstery,
+  } = req.body;
 
   try {
     const product = new Product({
@@ -178,9 +206,14 @@ async function createOne(req, res) {
       price: String(price),
       images,
       description,
+      upholstery,
       featured,
       stock: String(stock),
-      slug,
+      size,
+      made_in,
+      length,
+      tall,
+      category,
     });
     await product.save();
     return res.json({ message: "Product created successfully", data: product });
@@ -195,7 +228,7 @@ async function createOne(req, res) {
 async function importProducts(req, res) {
   //Products from body is an array of object and each object is a product
   const { products } = req.body;
-  console.log(products);
+  //console.log(products);
   try {
     const newProducts = await Product.insertMany(products);
     return res.json({
@@ -220,7 +253,7 @@ async function importProducts(req, res) {
  * @return req.json() with the related data
  *
  **/
-async function buy(req, res) { }
+async function buy(req, res) {}
 
 module.exports = {
   getAllProducts,
