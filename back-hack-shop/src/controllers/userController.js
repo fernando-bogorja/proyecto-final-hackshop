@@ -28,12 +28,12 @@ async function getAllUsers(req, res) {
  * @return req.json() with the info and the new user data
 **/
 async function createUser(req, res) {
-  const { name, lastName, email, password, address, phone } = req.body;
+  const { name, lastName, email, password, phone, isAdmin } = req.body;
   try {
-    const findUser = await User.findOne({ email })
+    const findUser = await User.findOne({ $or: [{ email }, { phone }] });
 
     //Si encontramos un usuario con el mismo email, retornamos un mensaje de error.
-    if (findUser) return res.json({ message: 'An user with the same email already exists', data: {} })
+    if (findUser) return res.json({ message: 'An user with the same email or phone number already exists', data: {} })
 
     //Si no encontramos un usuario con el mismo email, creamos el usuario.
     const user = new User({
@@ -41,7 +41,7 @@ async function createUser(req, res) {
       lastName,
       email,
       password: String(password),
-      address,
+      isAdmin,
       phone
     });
     await user.save();
@@ -65,7 +65,7 @@ async function createUser(req, res) {
 async function loginUser(req, res) {
   const { email, password } = req.body;
   try {
-    const findUser = await User.findOne({ email });
+    const findUser = await User.findOne({ email }).populate('address').populate('orderList');
 
     if (!findUser) return res.json({ message: 'User not found' });
 

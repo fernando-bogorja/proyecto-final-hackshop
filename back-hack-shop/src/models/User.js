@@ -7,9 +7,10 @@ const userSchema = new Schema({
   lastName: { type: String, max: 100, required: true },
   email: { type: String, max: 50, required: true },
   password: { type: String, max: 50, required: true },
-  address: { type: String, max: 100 },
-  phone: { type: String, max: 50 },
+  address: { type: Schema.Types.ObjectId, ref: "Address" },
+  phone: { type: String, max: 50, required: true, unique: true },
   orderList: { type: Schema.Types.ObjectId, ref: "Order" },
+  isAdmin: { type: Boolean, default: false }
 });
 
 //Hook to hash the password with bcrypt.
