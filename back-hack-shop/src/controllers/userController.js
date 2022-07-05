@@ -1,4 +1,4 @@
-const { User } = require('../dbInitialSetup');
+const { User, Address } = require('../dbInitialSetup');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -65,7 +65,8 @@ async function createUser(req, res) {
 async function loginUser(req, res) {
   const { email, password } = req.body;
   try {
-    const findUser = await User.findOne({ email }).populate('address').populate('orderList');
+    //GET ONLY THE ADDRESS OF THE USER
+    const findUser = await User.findOne({ email })
 
     if (!findUser) return res.json({ message: 'User not found' });
 
@@ -74,11 +75,14 @@ async function loginUser(req, res) {
     if (!isValidPassword) return res.json({ message: 'Invalid password' });
 
     //Si la contraseña es correcta, generamos un token.
+    const address = await Address.findOne({ user: findUser._id });
     jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) return res.json({ message: 'Error generating token', err });
+      let user = findUser.toObject();
+      address ? user = { ...user, address } : user = { ...user };
       return res.json({
         message: 'Login successful', data: {
-          user: findUser,
+          user,
           token
         }
       });

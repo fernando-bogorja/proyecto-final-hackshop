@@ -11,7 +11,7 @@ const addressSchema = new Schema({
   city: { type: String, max: 140 },
   department: { type: String, max: 140 },
   phone: { type: String, max: 10 },
-  user: { type: Schema.Types.ObjectId, ref: "User" },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 //Export the schema as a model

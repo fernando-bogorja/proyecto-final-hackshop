@@ -1,7 +1,7 @@
 const { Address } = require("../dbInitialSetup");
 
 async function createAddress(req, res) {
-  const { line_one, line_two, country, zipCode, city, department, phone, userId } =
+  const { line_one, line_two, country, zipCode, city, department, phone, user } =
     req.body;
   try {
     const address = await Address.create({
@@ -12,7 +12,7 @@ async function createAddress(req, res) {
       city,
       department,
       phone,
-      userId
+      user
     });
     res.status(201).json({
       status: "success",
