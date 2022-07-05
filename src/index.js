@@ -7,9 +7,10 @@ app.use(express.json());
 app.use(cors());
 const routes = require("./routes");
 const morgan = require('morgan')
+const cors = require('cors')
 
 app.use(morgan('dev'));
-
+app.use(cors());
 //Set up all the routes
 routes(app);
 
