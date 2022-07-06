@@ -78,12 +78,15 @@ async function loginUser(req, res) {
     const address = await Address.findOne({ user: findUser._id });
     jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) return res.json({ message: 'Error generating token', err });
+
       let user = findUser.toObject();
+
       address ? user = { ...user, address } : user = { ...user };
+
       return res.json({
         message: 'Login successful', data: {
+          token: token,
           user,
-          token
         }
       });
     })
