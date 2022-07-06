@@ -6,9 +6,9 @@ const bcrypt = require('bcryptjs');
 async function getAllUsers(req, res) {
   try {
     const users = await User.find();
-    return res.json(users);
+    return res.status(200).json(users);
   } catch (error) {
-    return res.json({ message: 'Error getting users', error });
+    return res.status(403).json({ message: 'Error getting users', error });
   }
 };
 
@@ -33,7 +33,7 @@ async function createUser(req, res) {
     const findUser = await User.findOne({ $or: [{ email }, { phone }] });
 
     //Si encontramos un usuario con el mismo email, retornamos un mensaje de error.
-    if (findUser) return res.json({ message: 'An user with the same email or phone number already exists', data: {} })
+    if (findUser) return res.status(403).json({ message: 'An user with the same email or phone number already exists', data: {} })
 
     //Si no encontramos un usuario con el mismo email, creamos el usuario.
     const user = new User({
@@ -46,10 +46,10 @@ async function createUser(req, res) {
     });
     await user.save();
 
-    return res.json({ message: 'User created successfully', data: user });
+    return res.status(200).json({ message: 'User created successfully', data: user });
 
   } catch (error) {
-    return res.json({ message: 'Error creating user', error });
+    return res.status(403).json({ message: 'Error creating user', error });
   }
 };
 
@@ -68,22 +68,21 @@ async function loginUser(req, res) {
     //GET ONLY THE ADDRESS OF THE USER
     const findUser = await User.findOne({ email })
 
-    if (!findUser) return res.json({ message: 'User not found' });
+    if (!findUser) return res.status(403).json({ message: 'User not found' });
 
     //Verificamos que la contraseña coincida con la contraseña encriptada.
     const isValidPassword = bcrypt.compareSync(String(password), findUser.password);
-    if (!isValidPassword) return res.json({ message: 'Invalid password' });
+    if (!isValidPassword) return res.status(403).json({ message: 'Invalid password' });
 
     //Si la contraseña es correcta, generamos un token.
     const address = await Address.findOne({ user: findUser._id });
     jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
-      if (err) return res.json({ message: 'Error generating token', err });
+      if (err) return res.status(403).json({ message: 'Error generating token', err });
 
       let user = findUser.toObject();
 
       address ? user = { ...user, address } : user = { ...user };
-
-      return res.json({
+      return res.status(200).json({
         message: 'Login successful', data: {
           token: token,
           user,
@@ -91,7 +90,7 @@ async function loginUser(req, res) {
       });
     })
   } catch (error) {
-    return res.json({ message: 'Error logging in', error });
+    return res.status(403).json({ message: 'Error logging in', error });
   }
 };
 
