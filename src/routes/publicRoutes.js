@@ -5,7 +5,7 @@ const { createOne, importProducts, getAllProducts, getProductByQuery, deleteAll,
 const { getPaymentMethodByQuery, createPaymentMethod, getAllPaymentMethods } = require('../controllers/paymentController');
 const { getAllCategories, createCategory } = require('../controllers/categoryController');
 const { createAddress, getAddress, getAllAddresses } = require('../controllers/addressController');
-const { getOrders, createOrder } = require('../controllers/orderController');
+const { getOrders, createOrder, deleteOrder, updateStatus } = require('../controllers/orderController');
 /* /api/ */
 
 publicRoutes.get("/", (req, res) => {
@@ -75,6 +75,8 @@ publicRoutes.get('/address/:id', getAddress);
 /* Begin Order Routes */
 publicRoutes.get('/orders', getOrders);
 publicRoutes.post('/orders/create', createOrder);
+publicRoutes.delete('/orders/delete', deleteOrder);
+publicRoutes.put('/orders/status', updateStatus);
 /* End Order Routes */
 
 
