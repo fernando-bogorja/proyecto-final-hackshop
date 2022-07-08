@@ -35,6 +35,24 @@ async function getOrders(req, res) {
     }
 }
 
+async function getSingleOrder(req, res) {
+    const { id } = req.params;
+    try {
+        const order = await Order.findById(id).populate('shopList').populate('boughtBy').populate('shippingAddress');
+        if (!order) return res.status(404).json({ message: 'Order not found' });
+
+        return res.status(200).json({
+            message: 'Order retrieved successfully',
+            order
+        });
+    } catch (error) {
+        return res.status(500).json({
+            message: "Error al obtener el pedido",
+            error
+        });
+    }
+}
+
 async function deleteOrder(req, res) {
     const { id } = req.body;
 
@@ -73,4 +91,4 @@ async function updateStatus(req, res) {
         });
     }
 }
-module.exports = { createOrder, getOrders, deleteOrder, updateStatus };
+module.exports = { createOrder, getOrders, getSingleOrder, deleteOrder, updateStatus };
