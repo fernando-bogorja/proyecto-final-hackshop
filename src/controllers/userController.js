@@ -1,4 +1,4 @@
-const { User, Address } = require('../dbInitialSetup');
+const { User, Address, Order } = require('../dbInitialSetup');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
@@ -76,12 +76,14 @@ async function loginUser(req, res) {
 
     //Si la contraseña es correcta, generamos un token.
     const address = await Address.findOne({ user: findUser._id });
+    const orders = await Order.find({ boughtBy: findUser._id });
     jwt.sign({ id: findUser._id }, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) return res.status(403).json({ message: 'Error generating token', err });
 
       let user = findUser.toObject();
 
       address ? user = { ...user, address } : user = { ...user };
+      orders ? user = { ...user, orders } : user = { ...user };
       return res.status(200).json({
         message: 'Login successful', data: {
           token: token,
