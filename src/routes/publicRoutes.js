@@ -1,7 +1,7 @@
 const express = require("express");
 const publicRoutes = express.Router();
 const { createUser, loginUser, getAllUsers } = require('../controllers/userController');
-const { createOne, importProducts, getAllProducts, getProductByQuery, deleteAll, deleteOne } = require('../controllers/productController');
+const { createOne, importProducts, getAllProducts, getProductByQuery, deleteAll, deleteOne, updateOne } = require('../controllers/productController');
 const { getPaymentMethodByQuery, createPaymentMethod, getAllPaymentMethods } = require('../controllers/paymentController');
 const { getAllCategories, createCategory } = require('../controllers/categoryController');
 const { createAddress, getAddress, getAllAddresses } = require('../controllers/addressController');
@@ -24,6 +24,7 @@ publicRoutes.get("/", (req, res) => {
         "GET /api/products/:get?param=value",
         "DELETE /api/products/delete",
         "DELETE /api/products/clear",
+        "PUT /api/products/update",
       ],
       paymentMethods: [
         "GET /api/payment",
@@ -53,6 +54,7 @@ publicRoutes.post("/products/create", createOne);
 publicRoutes.post("/products/import", importProducts);
 publicRoutes.delete("/products/clear", deleteAll);
 publicRoutes.delete("/products/delete", deleteOne);
+publicRoutes.put("/products/update", updateOne);
 /* End Product Routes */
 
 /* Begin Payment Method Routes */

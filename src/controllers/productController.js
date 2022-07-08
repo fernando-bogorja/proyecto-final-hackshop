@@ -164,7 +164,7 @@ async function deleteAll(req, res) {
  * @return req.json() with the related data
  */
 async function updateOne(req, res) {
-  const { id, name, price, images, description, featured, stock, slug } =
+  const { id, name, price, images, description, featured, stock } =
     req.body;
 
   try {
@@ -175,13 +175,12 @@ async function updateOne(req, res) {
       description,
       featured,
       stock: String(stock),
-      slug,
     });
 
     if (!product) return res.json({ message: "Product not found", data: {} });
 
     return res.json({ message: "Product updated successfully", data: product });
-  } catch (error) {}
+  } catch (error) { }
 }
 
 async function createOne(req, res) {
@@ -253,7 +252,7 @@ async function importProducts(req, res) {
  * @return req.json() with the related data
  *
  **/
-async function buy(req, res) {}
+async function buy(req, res) { }
 
 module.exports = {
   getAllProducts,
